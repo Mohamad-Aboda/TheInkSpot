@@ -34,5 +34,5 @@ jobs:
 
           docker-compose -f local.yml build
           echo "Pushing image to ECR..."
-          docker push
+          docker-compose -f local.yml push
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
