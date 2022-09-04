@@ -28,5 +28,5 @@ jobs:
       - name: Building Images
         run:  docker-compose -f local.yml build
       
-      - name: Push Images to registry
+      - name: Push Images to registry az
         run: docker-compose -f local.yml push
