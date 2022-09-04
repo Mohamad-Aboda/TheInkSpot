@@ -1,0 +1,33 @@
+name: Build And Push Images To Azure
+
+on:
+  pull_request:
+    branches: [master]
+    paths-ignore: [ "docs/**" ]
+
+  push:
+    branches: [master]
+    paths-ignore: [ "docs/**" ]
+
+jobs:
+  pushtoregistry:
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Checkout Code Repository
+        uses: actions/checkout@v2
+
+      - name: Log in to Registry
+        uses: azure/docker-login@v1
+        with:
+          login-server: ${{ secrets.REGISTRY_SERVER }}
+          username: ${{ secrets.REGISTRY_USERNAME }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
+
+      - name: Build, tag, and push image to Azure
+      run: |
+
+          docker-compose -f local.yml build
+          echo "Pushing images to azure..."
+          docker-compose -f local.yml push
+
