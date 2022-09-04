@@ -1,16 +1,22 @@
-name: Push Images
+name: Deploy to azure
 
 on:
+  pull_request:
+    branches: [master]
+    paths-ignore: [ "docs/**" ]
+
   push:
-      branches: [ "master" ]
-  
+    branches: [master]
+    paths-ignore: [ "docs/**" ]
+
+
 jobs:
-  pushtoregistry:
+  build:
+    name: Build Image
     runs-on: ubuntu-latest
     steps:
-
-      - name: Checkout Code Repository
-        uses: actions/checkout@v2.3.4
+      - name: Check out code
+        uses: actions/checkout@v2
 
       - name: Log in to Registry
         uses: azure/docker-login@v1
