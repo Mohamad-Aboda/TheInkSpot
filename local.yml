@@ -35,6 +35,7 @@ services:
       - theinkspot_local_postgres_data:/var/lib/postgresql/data:Z
       - theinkspot_local_postgres_data_backups:/backups:z
     env_file:
+      - ./.envs/.local/.django
       - ./.envs/.local/.postgres
 
   docs:
