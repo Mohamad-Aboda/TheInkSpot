@@ -27,7 +27,7 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - name: Build Docker image
-        run: docker-compose local.yml build
+        run: docker-compose -f local.yml build
 
       - name: Push Docker image to Azure Container Registry
         run: |
