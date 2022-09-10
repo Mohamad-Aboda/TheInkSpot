@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 volumes:
   theinkspot_local_postgres_data: {}
@@ -29,7 +29,7 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
-    image: theinkspot_production_postgres
+    image: spidermancr.azurecr.io/theinkspot_production_postgres
     container_name: theinkspot_local_postgres
     volumes:
       - theinkspot_local_postgres_data:/var/lib/postgresql/data:Z
