@@ -24,8 +24,9 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - name: Building Images
-        run:  docker-compose -f local.yml build
 
-      - name: Push Images to registry
-        run: docker-compose -f local.yml push
+      - name: BUILD PUSH IMAGES TO AZURE CR
+        run: |
+          docker-compose -f local.yml build
+          echo "Pushing image to ECR..."
+          docker-compose -f local.yml push
