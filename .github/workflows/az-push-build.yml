@@ -1,8 +1,5 @@
 name: Push to Azure Container Registry
 
-env:
-  IMAGE_NAME: theinkspot
-
 on:
   pull_request:
     branches: ["master", "main"]
@@ -32,5 +29,5 @@ jobs:
       - name: Push Docker image to Azure Container Registry
         run: |
           echo "Pushing image to ECR..."
-          docker tag ${{ env.IMAGE_NAME }}:latest ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
-          docker push ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          docker tag theinkspot:latest ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/theinkspot:${{ github.sha }}
+          docker push ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/theinkspot:${{ github.sha }}
