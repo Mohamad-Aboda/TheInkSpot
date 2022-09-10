@@ -1,32 +1,36 @@
-name: BUILD PUSH IMAGES TO AZURE
+name: Push to Azure Container Registry
+
+env:
+  IMAGE_NAME: theinkspot
 
 on:
   pull_request:
-    branches: [ "master", "main" ]
-    paths-ignore: [ "docs/**" ]
+    branches: ["master", "main"]
+    paths-ignore: ["docs/**"]
 
   push:
-    branches: [ "master", "main" ]
-    paths-ignore: [ "docs/**" ]
+    branches: ["master", "main"]
+    paths-ignore: ["docs/**"]
 
 jobs:
-  push-build-azurecr:
+  push-to-azure-container-registry:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@main
 
-      - name: Checkout Code Repository
-        uses: actions/checkout@v2.3.4
-
-      - name: Log in to Registry
+      - name: Login to Azure Container Registry
         uses: azure/docker-login@v1
         with:
           login-server: ${{ secrets.REGISTRY_SERVER }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
+      - name: Build Docker image
+        run: docker-compose build
 
-      - name: BUILD PUSH IMAGES TO AZURE CR
+      - name: Push Docker image to Azure Container Registry
         run: |
-          docker-compose -f local.yml build
           echo "Pushing image to ECR..."
-          docker-compose -f local.yml push
+          docker tag ${{ env.IMAGE_NAME }}:latest ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
+          docker push ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/${{ env.IMAGE_NAME }}:${{ github.sha }}
