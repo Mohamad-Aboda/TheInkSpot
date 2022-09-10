@@ -10,7 +10,7 @@ on:
     paths-ignore: [ "docs/**" ]
 
 jobs:
-  pushtoregistry:
+  push-build-azurecr:
     runs-on: ubuntu-latest
     steps:
 
