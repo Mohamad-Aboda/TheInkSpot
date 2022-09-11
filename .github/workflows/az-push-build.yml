@@ -26,13 +26,9 @@ jobs:
       - name: Build Docker image
         run: |
           echo "BUILDING IMAGES..."
-          docker build ./compose/local/django/ -t ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/spidermancr:${{ github.sha }}
-          # docker build ./compose/production/postgres/ -t ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/spidermancr:${{ github.sha }}
-          # # docker build ./compose/local/docs/ -t ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/spidermancr:${{ github.sha }}
-
+          docker-compose -f local.yml build
 
       - name: Push Docker image to Azure Container Registry
         run: |
-          echo "Pushing image to ECR..."
-          # docker tag spidermancr ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/spidermancr:${{ github.sha }}
-          docker push ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/spidermancr:${{ github.sha }}
+          echo "PUSHING IMAGES..."
+          docker-compose -f local.yml push
