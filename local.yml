@@ -9,7 +9,7 @@ services:
     build:
       context: .
       dockerfile: ./compose/local/django/Dockerfile
-    image: theinkspot_local_django
+    image:  ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/theinkspot_local_django:${{ github.sha }}
     container_name: theinkspot_local_django
     platform: linux/x86_64
     depends_on:
@@ -29,7 +29,7 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
-    image: theinkspot_production_postgres
+    image:  ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/theinkspot_production_postgres:${{ github.sha }}
     container_name: theinkspot_local_postgres
     volumes:
       - theinkspot_local_postgres_data:/var/lib/postgresql/data:Z
@@ -38,7 +38,7 @@ services:
       - ./.envs/.local/.postgres
 
   docs:
-    image: theinkspot_local_docs
+    image:  ${{ secrets.REGISTRY_USERNAME }}.azurecr.io./theinkspot_local_docs:${{ github.sha }}
     container_name: theinkspot_local_docs
     platform: linux/x86_64
     build:
@@ -55,18 +55,18 @@ services:
     command: /start-docs
 
   mailhog:
-    image: mailhog/mailhog:v1.0.0
+    image:  ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/mailhog/mailhog:v1.0.0:${{ github.sha }}
     container_name: theinkspot_local_mailhog
     ports:
       - "8025:8025"
 
   redis:
-    image: redis:6
+    image: ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/redis:6:${{ github.sha }}
     container_name: theinkspot_local_redis
 
   celeryworker:
     <<: *django
-    image: theinkspot_local_celeryworker
+    image:  ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/theinkspot_local_celeryworker:${{ github.sha }}
     container_name: theinkspot_local_celeryworker
     depends_on:
       - redis
@@ -77,7 +77,7 @@ services:
 
   celerybeat:
     <<: *django
-    image: theinkspot_local_celerybeat
+    image:  ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/theinkspot_local_celerybeat:${{ github.sha }}
     container_name: theinkspot_local_celerybeat
     depends_on:
       - redis
@@ -88,7 +88,7 @@ services:
 
   flower:
     <<: *django
-    image: theinkspot_local_flower
+    image:  ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/theinkspot_local_flower:${{ github.sha }}
     container_name: theinkspot_local_flower
     ports:
       - "5555:5555"
