@@ -24,11 +24,15 @@ jobs:
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
       - name: Build Docker image
-        run: docker-compose -f local.yml build
+        run: |
+          echo "BUILDING IMAGES..."
+          docker build ./compose/local/django/Dockerfile -t ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/spidermancr:${{ github.sha }}
+          docker build ./compose/production/postgres/Dockerfile -t ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/spidermancr:${{ github.sha }}
+          docker build ./compose/local/docs/Dockerfile -t ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/spidermancr:${{ github.sha }}
+
 
       - name: Push Docker image to Azure Container Registry
         run: |
           echo "Pushing image to ECR..."
           # docker tag spidermancr ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/spidermancr:${{ github.sha }}
-          docker-compose -f local.yml push
-          # ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/spidermancr:${{ github.sha }}
+          docker push ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/spidermancr:${{ github.sha }}
