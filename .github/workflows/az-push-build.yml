@@ -29,5 +29,5 @@ jobs:
       - name: Push Docker image to Azure Container Registry
         run: |
           echo "Pushing image to ECR..."
-          docker tag theinkspot ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/theinkspot:${{ github.sha }}
-          docker push ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/theinkspot:${{ github.sha }}
+          docker tag spidermancr ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/theinkspot:${{ github.sha }}
+          docker push ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/spidermancr:${{ github.sha }}
