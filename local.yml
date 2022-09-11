@@ -55,13 +55,13 @@ services:
     command: /start-docs
 
   mailhog:
-    image:  spidermancr.azurecr.io/mailhog/mailhog:v1.0.0
+    image: mailhog/mailhog:v1.0.0
     container_name: theinkspot_local_mailhog
     ports:
       - "8025:8025"
 
   redis:
-    image: spidermancr.azurecr.io/redis:6
+    image: redis:6
     container_name: theinkspot_local_redis
 
   celeryworker:
