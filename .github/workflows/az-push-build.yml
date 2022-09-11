@@ -30,5 +30,5 @@ jobs:
         run: |
           echo "Pushing image to ECR..."
           # docker tag spidermancr ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/spidermancr:${{ github.sha }}
-          docker push
+          docker-compose -f local.yml push
           # ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/spidermancr:${{ github.sha }}
