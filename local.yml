@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 volumes:
   theinkspot_local_postgres_data: {}
@@ -9,7 +9,7 @@ services:
     build:
       context: .
       dockerfile: ./compose/local/django/Dockerfile
-    image: theinkspot_local_django
+    image:  spidermancr.azurecr.io/theinkspot_local_django
     container_name: theinkspot_local_django
     platform: linux/x86_64
     depends_on:
@@ -29,7 +29,7 @@ services:
     build:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
-    image: theinkspot_production_postgres
+    image:  spidermancr.azurecr.io/theinkspot_production_postgres
     container_name: theinkspot_local_postgres
     volumes:
       - theinkspot_local_postgres_data:/var/lib/postgresql/data:Z
@@ -38,7 +38,7 @@ services:
       - ./.envs/.local/.postgres
 
   docs:
-    image: theinkspot_local_docs
+    image:  spidermancr.azurecr.io/theinkspot_local_docs
     container_name: theinkspot_local_docs
     platform: linux/x86_64
     build:
@@ -66,7 +66,7 @@ services:
 
   celeryworker:
     <<: *django
-    image: theinkspot_local_celeryworker
+    image:  spidermancr.azurecr.io/theinkspot_local_celeryworker
     container_name: theinkspot_local_celeryworker
     depends_on:
       - redis
@@ -77,7 +77,7 @@ services:
 
   celerybeat:
     <<: *django
-    image: theinkspot_local_celerybeat
+    image:  spidermancr.azurecr.io/theinkspot_local_celerybeat
     container_name: theinkspot_local_celerybeat
     depends_on:
       - redis
@@ -88,7 +88,7 @@ services:
 
   flower:
     <<: *django
-    image: theinkspot_local_flower
+    image:  spidermancr.azurecr.io/theinkspot_local_flower
     container_name: theinkspot_local_flower
     ports:
       - "5555:5555"
