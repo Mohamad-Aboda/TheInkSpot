@@ -26,9 +26,9 @@ jobs:
       - name: Build Docker image
         run: |
           echo "BUILDING IMAGES..."
-          docker build ./compose/local/django/Dockerfile -t ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/spidermancr:${{ github.sha }}
-          docker build ./compose/production/postgres/Dockerfile -t ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/spidermancr:${{ github.sha }}
-          docker build ./compose/local/docs/Dockerfile -t ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/spidermancr:${{ github.sha }}
+          docker build ./compose/local/django/ -t ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/spidermancr:${{ github.sha }}
+          docker build ./compose/production/postgres/ -t ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/spidermancr:${{ github.sha }}
+          docker build ./compose/local/docs/ -t ${{ secrets.REGISTRY_USERNAME }}.azurecr.io/spidermancr:${{ github.sha }}
 
 
       - name: Push Docker image to Azure Container Registry
